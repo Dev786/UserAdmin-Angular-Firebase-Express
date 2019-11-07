@@ -1,0 +1,114 @@
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet"
+        href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+
+    <link rel="stylesheet" href="./css/paging.css">
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+    <script src="./scripts/paging.js"></script>
+    <script src="./scripts/index.js"></script>
+
+</head>
+
+<body ng-app="BlankApp" ng-cloak>
+    <div ng-controller="admin">
+        <div flex layout="row" layout-align="center center" layout-padding ng-init="getUsers()">
+            <md-content class="md-padding" layout-xs="column" layout="column" layout-padding style="width:75%">
+
+                <md-card layout="column" layout-padding>
+                    <h1>Add New User</h1>
+
+                    <div flex layout="row">
+                        <md-input-container flex>
+                            <label>Username</label>
+                            <input ng-model="user.Name">
+                        </md-input-container>
+
+                        <md-input-container flex>
+                            <label>Email</label>
+                            <input ng-model="user.Email" type="email">
+                        </md-input-container>
+
+                        <md-input-container flex>
+                            <label>Password</label>
+                            <input ng-model="user.Password" type="password">
+                        </md-input-container>
+
+                        <md-input-container flex>
+                            <label>Phone Number</label>
+                            <input ng-model="user.PhoneNumber" maxlength="10" type="number">
+                        </md-input-container>
+                    </div>
+                    <div flex layout="row" layout-align="end center">
+                        <md-button class="md-raised md-primary" ng-click="addUser()">Add</md-button>
+                    </div>
+                </md-card>
+                <md-card layout="column" layout-padding>
+                    <div flex layout="row">
+                        <div flex="30"><b>Name</b></div>
+                        <div flex="30"><b>Email</b></div>
+                        <div flex="30"><b>Phone Number</b></div>
+                        <div flex="10"></div>
+                    </div>
+                    <div flex layout="column" ng-repeat="row in users track by $index" layout-padding>
+                        <div flex layout="row">
+                            <div flex="30">{{row.Name}}</div>
+                            <div flex="30">{{row.Email}}</div>
+                            <div flex>{{row.PhoneNumber}}</div>
+                            <md-button class="md-icon-button" aria-label="Edit" title="Edit User">
+                                <i class="material-icons" ng-click="editUser(row,$index)">edit</i>
+                            </md-button>
+                            <md-button class="md-icon-button" aria-label="Edit" title="Edit User">
+                                <i class="material-icons" ng-click="deleteUser($index)">delete</i>
+                            </md-button>
+                        </div>
+                        <div flex layout="row" ng-show="showUser[$index]">
+                            <div flex layout="row" style="margin-top: 1%;">
+                                <md-input-container flex="30" style="margin:0px;padding:0px">
+                                    <label>Username</label>
+                                    <input ng-model="userToUpdate[$index].Name">
+                                </md-input-container>
+
+                                <md-input-container flex="30" style="margin:0px;padding:0px">
+                                    <label>Email</label>
+                                    <input ng-model="userToUpdate[$index].Email" type="email">
+                                </md-input-container>
+
+                                <md-input-container flex="30" style="margin:0px;padding:0px">
+                                    <label>Password</label>
+                                    <input ng-model="userToUpdate[$index].Password" type="password">
+                                </md-input-container>
+
+                                <md-input-container flex="20" style="margin:0px;padding:0px">
+                                    <label>Phone Number</label>
+                                    <input ng-model="userToUpdate[$index].PhoneNumber" maxlength="10" type="number">
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div flex layout="row" layout-align="end end" ng-show="showUser[$index]">
+                            <md-button class="md-raised md-primary" ng-click="updateUser($index)">Update</md-button>
+                            <md-button class="md-raised md-primary"
+                                ng-click="userToUpdate[$index]={};showUser[$index]=!showUser[$index]">Cancel</md-button>
+                        </div>
+                    </div>
+                    <div flex layout="row" layout-align="center center" paging page="currentPage" page-size="pageSize"
+                        total="totalLength"
+                        paging-action="userPagingAction('Paging Clicked', currentPage, pageSize, totalLength)">
+                    </div>
+                </md-card>
+            </md-content>
+        </div>
+</body>
+
+</html>
